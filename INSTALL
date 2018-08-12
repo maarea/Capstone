@@ -1,0 +1,9 @@
+Building Capstone
+
+See doc/readme-qt.rst for instructions on building Capstone Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Capstone.
+
+See doc/build-*.txt for instructions on building Capstoned,
+the intended-for-services, no-graphical-interface, reference
+implementation of Capstone.
