@@ -1,0 +1,11 @@
+[Protocol]
+exec=Capstone-qt '%u'
+protocol=Capstone
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

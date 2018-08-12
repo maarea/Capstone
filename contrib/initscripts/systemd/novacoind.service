@@ -1,0 +1,11 @@
+[Unit]
+Description=Capstone daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=Capstone
+ExecStart=/opt/Capstone/Capstoned
+
+[Install]
+WantedBy=multi-user.target

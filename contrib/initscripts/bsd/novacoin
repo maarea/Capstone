@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: Capstone
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# Capstone_enable (bool): Set to NO by default. Set this variable to YES if you want to enable Capstone service.
+# Capstone_config (path): Set to /usr/local/etc/Capstone.conf by default.
+# Capstone_user:  The user account Capstone daemon runs as. It uses 'root' user by default.
+# Capstone_group: The group account Capstone daemon runs as. It uses 'wheel' group by default.
+# Capstone_datadir (str): Default to "/var/db/Capstone". Base data directory.
+
+. /etc/rc.subr
+
+name=Capstone
+rcvar=Capstone_enable
+
+: ${Capstone_enable:=NO}
+: ${Capstone_config=/usr/local/etc/Capstone.conf}
+: ${Capstone_datadir=/var/db/Capstone}
+: ${Capstone_user="root"}
+: ${Capstone_group="wheel"}
+
+required_files=${Capstone_config}
+command=/usr/local/bin/Capstoned
+Capstone_chdir=${Capstone_datadir}
+pidfile="${Capstone_datadir}/Capstoned.pid"
+stop_cmd=Capstone_stop
+command_args="-conf=${Capstone_config} -datadir=${Capstone_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+Capstone_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${Capstone_datadir}
+	[ $? -eq 0 ] && chown -R ${Capstone_user}:${Capstone_group} ${Capstone_datadir}
+}
+
+Capstone_prestart()
+{
+	if [ ! -d "${Capstone_datadir}/." ]; then
+		Capstone_create_datadir || return 1
+	fi
+}
+
+Capstone_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+Capstone_stop()
+{
+    Capstone_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${Capstone_config} -datadir=${Capstone_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

@@ -1,0 +1,5 @@
+Capstone-qt usr/bin
+share/pixmaps/Capstone32.xpm usr/share/pixmaps
+share/pixmaps/Capstone80.xpm usr/share/pixmaps
+debian/Capstone-qt.desktop usr/share/applications
+debian/Capstone-qt.protocol usr/share/kde4/services/

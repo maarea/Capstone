@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Capstone
+Comment=Capstone P2P Cryptocurrency
+Comment[ru]=Capstone, P2P криптовалюта
+Comment[fr]=Capstone, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Capstone, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/Capstone-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/Capstone80.xpm
+MimeType=x-scheme-handler/Capstone;
+Categories=Office;
